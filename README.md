@@ -4,6 +4,7 @@ installation of yosys
 
 commands to install (linux)
 
+```
 $ git clone https://github.com/YosysHQ/yosys.git
 
 $ cd yosys-master
@@ -20,6 +21,7 @@ $ make config-gcc
 $ make
 
 $ sudo make install
+```
 
 ![Screenshot from 2023-07-31 09-58-53](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f0898f77-7e00-41a6-8a96-036bb38a882c)
 

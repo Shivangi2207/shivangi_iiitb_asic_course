@@ -30,22 +30,20 @@ Installation of iverilog
 
 commands to install
 
-Steps to install iverilog
+```
 
 sudo apt-get install iverilog
-
+```
 
 ![Screenshot from 2023-07-31 09-59-32](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/6338283f-7296-4109-8ccb-638488b8c950)
 
 
 Installation of gtkwave
 
-commands to install
-
 Steps to install gtkwave
-
+```
 sudo apt update
 
 sudo apt install gtkwave
-
+```
 ![Screenshot from 2023-07-31 10-00-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5d015986-fa7c-4114-ab27-71e5090eb0b5)

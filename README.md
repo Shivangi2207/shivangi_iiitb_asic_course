@@ -1,4 +1,5 @@
 # shivangi_iiitb_asic_course
+# DAY 0
 
 <details>
   <summary><strong>Yosys</strong></summary>

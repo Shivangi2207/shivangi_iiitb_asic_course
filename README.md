@@ -1,9 +1,11 @@
 # shivangi_iiitb_asic_course
-# DAY 0
+## DAY 0
 
 <details>
   <summary><strong>Yosys</strong></summary>
-Installation of yosys
+
+  ## Installation of yosys
+
 commands to install (linux)
 
 ```
@@ -30,7 +32,8 @@ $ sudo make install
 
 <details>
   <summary><strong>iverilog</strong></summary>
-Installation of iverilog
+
+  ## Installation of iverilog
 
 commands to install
 
@@ -45,7 +48,8 @@ sudo apt-get install iverilog
 
 <details>
   <summary><strong>Gtkwave</strong></summary>
-Installation of gtkwave
+
+  ## Installation of gtkwave
 
 Steps to install gtkwave
 ```
@@ -54,4 +58,136 @@ sudo apt update
 sudo apt install gtkwave
 ```
 ![Screenshot from 2023-07-31 10-00-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5d015986-fa7c-4114-ab27-71e5090eb0b5)
+</details>
+
+<details>
+<summary><strong>Ngspice</strong></summary>
+
+  # Installation of ngspice
+Download the tarball from https://sourceforge.net/projects/ngspice/files/ to a local directory and then follow the commands given below :
+## Dependency for ngspice:
+
+```
+sudo apt-get install libxaw7-dev
+```
+
+## ngspice installation:
+
+```
+tar -zxvf ngspice-40.tar.gz
+cd ngspice-40
+mkdir release
+cd release
+../configure  --with-x --with-readline=yes --disable-debug
+make
+sudo make install
+```
+
+![Screenshot from 2023-08-02 11-50-49](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8f533196-cc13-4d60-bb26-73b644097f62)
+
+  
+</details>
+
+<details>
+<summary><strong>Magic</strong></summary>
+
+  ## Installation of magic
+
+```
+sudo apt-get install m4
+sudo apt-get install tcsh
+sudo apt-get install csh
+sudo apt-get install libx11-dev
+sudo apt-get install tcl-dev tk-dev
+sudo apt-get install libcairo2-dev
+sudo apt-get install mesa-common-dev libglu1-mesa-dev
+sudo apt-get install libncurses-dev
+git clone https://github.com/RTimothyEdwards/magic
+cd magic
+./configure
+make
+sudo make install
+```
+![Screenshot from 2023-08-02 10-40-41](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/72965e3d-5ae9-4ceb-83d9-04ea78a89492)
+
+
+
+
+</details>
+
+<details>
+<summary><strong>OpenSTA</strong></summary>
+
+## Installation of OpenSTA
+
+## Steps:
+Prior to the installation of the OpenSTA install the dependencies using the command shown below :
+```
+sudo apt-get install cmake clang gcc tcl swig bison flex 
+```
+
+After installing the dependencies use the following command to install OpenSTA:
+
+```
+git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+cd OpenSTA
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
+
+![Screenshot from 2023-08-02 11-44-43](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/d5b824eb-4c7b-4453-8d68-65950d9b69fd)
+
+
+  
+</details>
+
+<details>
+<summary><strong>OpenLANE</strong></strong></summary>
+
+## Installation of OpenLANE
+
+Prior to the installation of the OpenLane install the dependencies and packages using the command shown below :
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install -y build-essential python3 python3-venv python3-pip make git
+```
+
+## Docker Installation
+
+```
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo reboot 
+
+
+# Check for installation
+sudo docker run hello-world
+```
+
+## Steps to install OpenLane, PDKs and Tools
+
+```
+cd $HOME
+git clone https://github.com/The-OpenROAD-Project/OpenLane
+cd OpenLane
+make
+make test
+```
+
+
+  
 </details>

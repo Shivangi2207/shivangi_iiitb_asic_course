@@ -201,5 +201,5 @@ make test
 ## Day 1
 
 <details>
-  hi
+<summary>#</summary>
 </details>

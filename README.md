@@ -1,8 +1,12 @@
-# shivangi_iiitb_asic_course
+# Shivangi_iiitb_asic_course
+## Table of Contents
+-[Day 0](#day-0)
 
-[Day 0](#day-0)
+-[References](#references)
 
-[Day 1](#day-1)
+-[Day 1](#day-1)
+
+
 
 ## Day 0
 
@@ -10,9 +14,17 @@
 <details>
   <summary><strong>Yosys</strong></summary>
 
-  ## Installation of yosys
+  ## What is yosys?
+  
+  Yosys is a framework for Verilog RTL synthesis.
+  It currently has extensive Verilog-2005 support and provides a basic set of synthesis algorithms for various application domains. 
+  Yosys can be adapted to perform any synthesis job by combining the existing passes (algorithms) using synthesis scripts and adding    additional passes as needed by extending the Yosys C++ code base.
+  Yosys is free software licensed under the ISC license (a GPL compatible license that is similar in terms to the MIT license or the 
+  2-clause BSD license).
 
-commands to install (linux)
+
+
+## Commands to install Yosys(for linux)
 
 ```
 $ git clone https://github.com/YosysHQ/yosys.git
@@ -37,11 +49,14 @@ $ sudo make install
 </details>
 
 <details>
-  <summary><strong>iverilog</strong></summary>
+  <summary><strong> Icarus verilog</strong></summary>
 
-  ## Installation of iverilog
+## What is iverilog?
 
-commands to install
+Icarus verilog is a compiler that translates Verilog source code into executable programs for simulation, or other netlist formats for further processing. The currently supported targets are vvp for simulation, and fpga for synthesis. 
+
+
+## Commands to install iverilog
 
 ```
 
@@ -55,9 +70,18 @@ sudo apt-get install iverilog
 <details>
   <summary><strong>Gtkwave</strong></summary>
 
-  ## Installation of gtkwave
+## What is GTKWave?
 
-Steps to install gtkwave
+GTKWave is an analysis tool used to perform debugging on Verilog or VHDL
+simulation models. With the exception of interactive VCD viewing, it is not
+intended to be run interactively with simulation, but instead relies on a post-
+mortem approach through the use of dumpfiles. 
+
+  ## Commands to install gtkwave
+
+
+
+
 ```
 sudo apt update
 
@@ -68,16 +92,21 @@ sudo apt install gtkwave
 
 <details>
 <summary><strong>Ngspice</strong></summary>
+ 
+  ## What is Ngspice?
+ Ngspice is the open source spice simulator for electric and electronic circuits.
+ Ngspice offers a wealth of device models for active, passive, analog, and digital elements. Model parameters are provided by our       collections, by the semiconductor device manufacturers, or from semiconductor foundries. The user adds her circuits as a netlist, and the output is one or more graphs of currents, voltages and other electrical quantities or is saved in a data file.
 
-  # Installation of ngspice
+  
+  ## Installation of Ngspice
 Download the tarball from https://sourceforge.net/projects/ngspice/files/ to a local directory and then follow the commands given below :
-## Dependency for ngspice:
+## Dependency for Ngspice:
 
 ```
 sudo apt-get install libxaw7-dev
 ```
 
-## ngspice installation:
+## Commands for installation:
 
 ```
 tar -zxvf ngspice-40.tar.gz
@@ -96,8 +125,12 @@ sudo make install
 
 <details>
 <summary><strong>Magic</strong></summary>
+ 
+  ## What is Magic?
+  
+  Magic is a venerable VLSI layout tool, written in the 1980's at Berkeley by John Ousterhout, now famous primarily for writing the scripting interpreter language Tcl. Due largely in part to its liberal Berkeley open-source license, magic has remained popular with universities and small companies. The open-source license has allowed VLSI engineers with a bent toward programming to implement clever ideas and help magic stay abreast of fabrication technology. However, it is the well thought-out core algorithms which lend to magic the greatest part of its popularity. Magic is widely cited as being the easiest tool to use for circuit layout, even for people who ultimately rely on commercial tools for their product design flow. 
 
-  ## Installation of magic
+  ## Commands to install Magic
 
 ```
 sudo apt-get install m4
@@ -124,7 +157,10 @@ sudo make install
 <details>
 <summary><strong>OpenSTA</strong></summary>
 
-## Installation of OpenSTA
+## What is OpenSTA?
+OpenSTA is a distributed software testing architecture designed around CORBA, it was originally developed to be commercial software by CYRANO. The current toolset has the capability of performing scripted HTTP and HTTPS heavy load tests with performance measurements from Win32 platforms. However, the architectural design means it could be capable of much more.
+
+## Commands to install OpenSTA
 
 ## Steps:
 Prior to the installation of the OpenSTA install the dependencies using the command shown below :
@@ -152,6 +188,11 @@ sudo make install
 
 <details>
 <summary><strong>OpenLANE</strong></strong></summary>
+
+## What is OpenLANE?
+
+OpenLane is an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen, CVC, SPEF-Extractor, KLayout and a number of custom scripts for design exploration and optimization. It also provides a number of custom scripts for design exploration and optimization.
+OpenLane abstracts the underlying open source utilities, and allows users to configure all their behavior with just a single configuration file.
 
 ## Installation of OpenLANE
 
@@ -201,5 +242,15 @@ make test
 ## Day 1
 
 <details>
-<summary>#</summary>
+<summary>day1</summary>
 </details>
+
+## References
+1. https://yosyshq.net/yosys/
+2. https://linux.die.net/man/1/iverilog
+3. https://github.com/steveicarus/iverilog
+4. https://gtkwave.sourceforge.net/gtkwave.pdf
+5. https://ngspice.sourceforge.io/
+6. http://opencircuitdesign.com/magic/
+7. http://opensta.org/
+8. https://openlane.readthedocs.io/en/latest/

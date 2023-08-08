@@ -4,11 +4,11 @@
  This github repository summarizes the process required  during tapeout.
 
 ## Quick links:
-1 -[Day 0](#day-0)
+[Day 0](#day-0)
 
-2 -[Day 1](#day-1)
+[Day 1](#day-1)
 
-3 -[References](#references)
+[References](#references)
 
 
 ## Day 0
@@ -339,4 +339,4 @@ yosys> !gvim good_mux_netlist.v
 6. http://opencircuitdesign.com/magic/
 7. http://opensta.org/
 8. https://openlane.readthedocs.io/en/latest/
-
+9. https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop

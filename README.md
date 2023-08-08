@@ -1,10 +1,15 @@
-# Shivangi_iiitb_asic_course
-## Table of Contents
--[Day 0](#day-0)
-      
--[References](#references)
+## Shivangi_iiitb_asic_course
 
--[Day 1](#day-1)
+## TAPEOUT PROCESS
+ This github repository summarizes the process required  during tapeout.
+
+## Quick links:
+1 -[Day 0](#day-0)
+
+2 -[Day 1](#day-1)
+
+3 -[References](#references)
+
 
 ## Day 0
 
@@ -26,20 +31,14 @@
 
 ```
 $ git clone https://github.com/YosysHQ/yosys.git
-
 $ cd yosys-master
-
 $ sudo apt install make (If make is not installed please install it)
-
 $ sudo apt-get install build-essential clang bison flex
 libreadline-dev gawk tcl-dev libffi-dev git
 graphviz xdot pkg-config python3 libboost-system-dev
 libboost-python-dev libboost-filesystem-dev zlib1g-dev
-
 $ make config-gcc
-
 $ make
-
 $ sudo make install
 ```
 
@@ -81,9 +80,8 @@ mortem approach through the use of dumpfiles.
 
 
 ```
-sudo apt update
-
-sudo apt install gtkwave
+$ sudo apt update
+$ sudo apt install gtkwave
 ```
 ![Screenshot from 2023-07-31 10-00-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5d015986-fa7c-4114-ab27-71e5090eb0b5)
 </details>
@@ -101,19 +99,19 @@ Download the tarball from https://sourceforge.net/projects/ngspice/files/ to a l
 ## Dependency for Ngspice:
 
 ```
-sudo apt-get install libxaw7-dev
+$ sudo apt-get install libxaw7-dev
 ```
 
 ## Commands for installation:
 
 ```
-tar -zxvf ngspice-40.tar.gz
-cd ngspice-40
-mkdir release
-cd release
-../configure  --with-x --with-readline=yes --disable-debug
-make
-sudo make install
+$ tar -zxvf ngspice-40.tar.gz
+$ cd ngspice-40
+$ mkdir release
+$ cd release
+$ ../configure  --with-x --with-readline=yes --disable-debug
+$ make
+$ sudo make install
 ```
 
 ![Screenshot from 2023-08-02 11-50-49](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8f533196-cc13-4d60-bb26-73b644097f62)
@@ -234,7 +232,105 @@ make test
 ```
 </details>
 
+
+
+## Day 1
+
+<details>
+<summary><strong>Summary</strong></summary>
+
+## Day_1_intro
+In todays Lab i have done simulation and synthesis of 2x1 Mux  using iverilog and yosys respectively. iverilog generates from the RTL design and its testbench a value changing dump file (vcd). gtkwave is the tool used to plot the simulation results of the design.
+
+## Simulator
+Simulator is the tool used for simulating the design.Here we have used iverilog. RTL design is checked for adherence to the specs by simulting the design.It changes on input signals.Only when the input changes the output is evaluated.
+
+## Design
+Design is the actual code or set of verilog codes which has the intended functionality to meet with the required specifications.It may have 1 or more primary inputs and outputs.
+## Testbench
+Testbench is the setup to apply stimulus to the design to check its functionality.It does not have any primary i/p or o/p.
+
+## Synthesizer
+It is a tool which is used for converting the RTL To netlist.Here we have used Yosys for synthesizer. In this we use same testbench that we have used during simulation to verify the synthesis. 
+
+      
+</details>
+
+<details>
+<summary><strong>Verilog code</strong></summary>
+The verilog codes of the 2x1 mux (good_mux.v) and its testbench (tb_good_mux.v) are taken from https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+
+## Commands to download the lab folder
+
+```
+$ git clone https://github.com/kunalg123/vsdflow.git
+$ git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+
+
+```   
+</details>
+
+<details>
+<summary><strong>Simulation</strong></summary>
+To simulate and view plots of 2x1 mux (good_mux.v) and its testbench (tb_good_mux.v) following commands are used:
+
+## Commands
+
+```
+$ iverilog good_mux.v tb_good_mux.v
+$ ./a.out
+$ gtkwave tb_good_mux.vcd
+
+```
+
+## Plot obtained:
+
+![Screenshot from 2023-08-08 23-47-03](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5083f91b-52f1-4343-94de-353008bd834b)
+
+
+
+      
+</details>
+
+<details>
+<summary><strong> Synthesis</strong></strong></summary>
+ 
+
+In the directory of verilog_files (/home/shivangi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files) following commands are used to synthesize and view Synthesized design :
+
+## Commands
+
+```
+$ yosys
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog good_mux.v
+synth -top good_mux
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> show
+```
+## Synthesized design
+
+![Screenshot from 2023-08-09 00-09-18](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/16ddbc34-90bb-47ba-809c-2fed1fa67731)
+
+
+Now, to generate the netlist following commands are used:
+
+```
+yosys> write_verilog good_mux_netlist.v
+yosys> write_verilog -noattr good_mux_netlist.v
+yosys> !gvim good_mux_netlist.v 
+
+```
+## Generated Netlist
+
+![Screenshot from 2023-08-09 00-18-20](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/22c8fd55-79f5-4f7d-b58d-04b4f8dc837b)
+
+      
+</details>
+
+
 ## References
+
 1. https://yosyshq.net/yosys/
 2. https://linux.die.net/man/1/iverilog
 3. https://github.com/steveicarus/iverilog
@@ -244,10 +340,3 @@ make test
 7. http://opensta.org/
 8. https://openlane.readthedocs.io/en/latest/
 
-
-
-## Day 1
-
-<details>
-<summary>day1</summary>
-</details>

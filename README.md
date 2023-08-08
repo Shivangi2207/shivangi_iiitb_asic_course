@@ -1,12 +1,10 @@
 # Shivangi_iiitb_asic_course
 ## Table of Contents
 -[Day 0](#day-0)
-
+      
 -[References](#references)
 
 -[Day 1](#day-1)
-
-
 
 ## Day 0
 
@@ -234,15 +232,6 @@ cd OpenLane
 make
 make test
 ```
-
-
-  
-</details>
-
-## Day 1
-
-<details>
-<summary>day1</summary>
 </details>
 
 ## References
@@ -254,3 +243,11 @@ make test
 6. http://opencircuitdesign.com/magic/
 7. http://opensta.org/
 8. https://openlane.readthedocs.io/en/latest/
+
+
+
+## Day 1
+
+<details>
+<summary>day1</summary>
+</details>

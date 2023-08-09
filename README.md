@@ -4,29 +4,30 @@
  This github repository summarizes the process required  during tapeout.
 
 ## Quick links:
+
 [Day 0](#day-0)
 
 [Day 1](#day-1)
 
+
 [References](#references)
 
 ## Day 0
-
+## Yosys
 
 <details>
-  <summary><strong>Yosys</strong></summary>
-
-  ## What is yosys?
+  <summary><strong>What is yosys?</strong></summary> 
   
   Yosys is a framework for Verilog RTL synthesis.
-  It currently has extensive Verilog-2005 support and provides a basic set of synthesis algorithms for various application domains. 
+  It currently has extensive Verilog-2005 support and provides a basic set of     synthesis algorithms for various application domains. 
   Yosys can be adapted to perform any synthesis job by combining the existing passes (algorithms) using synthesis scripts and adding    additional passes as needed by extending the Yosys C++ code base.
   Yosys is free software licensed under the ISC license (a GPL compatible license that is similar in terms to the MIT license or the 
   2-clause BSD license).
 
+</details>
 
-
-## Commands to install Yosys(for linux)
+<details>
+  <summary><strong>Commands to install Yosys(for linux)</strong></summary> 
 
 ```
 $ git clone https://github.com/YosysHQ/yosys.git
@@ -42,18 +43,19 @@ $ sudo make install
 ```
 
 ![Screenshot from 2023-07-31 09-58-53](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f0898f77-7e00-41a6-8a96-036bb38a882c)
+
 </details>
 
+## Icarus verilog
 
 <details>
-  <summary><strong> Icarus verilog</strong></summary>
-
-## What is iverilog?
+  <summary><strong> What is iverilog? </strong></summary>
 
 Icarus verilog is a compiler that translates Verilog source code into executable programs for simulation, or other netlist formats for further processing. The currently supported targets are vvp for simulation, and fpga for synthesis. 
+</details>
 
-
-## Commands to install iverilog
+<details>
+  <summary><strong> Commands to install iverilog</strong></summary>
 
 ```
 
@@ -64,20 +66,18 @@ sudo apt-get install iverilog
 
 </details>
 
+## Gtkwave
 <details>
-  <summary><strong>Gtkwave</strong></summary>
-
-## What is GTKWave?
+  <summary><strong>What is GTKWave?</strong></summary>
 
 GTKWave is an analysis tool used to perform debugging on Verilog or VHDL
 simulation models. With the exception of interactive VCD viewing, it is not
 intended to be run interactively with simulation, but instead relies on a post-
 mortem approach through the use of dumpfiles. 
+</details>
 
-  ## Commands to install gtkwave
-
-
-
+<details>
+  <summary><strong>Commands to install gtkwave</strong></summary>
 
 ```
 $ sudo apt update
@@ -86,24 +86,26 @@ $ sudo apt install gtkwave
 ![Screenshot from 2023-07-31 10-00-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5d015986-fa7c-4114-ab27-71e5090eb0b5)
 </details>
 
+
+## Ngspice
 <details>
-<summary><strong>Ngspice</strong></summary>
- 
-  ## What is Ngspice?
+<summary><strong> What is Ngspice?</strong></summary>
+	
  Ngspice is the open source spice simulator for electric and electronic circuits.
  Ngspice offers a wealth of device models for active, passive, analog, and digital elements. Model parameters are provided by our       collections, by the semiconductor device manufacturers, or from semiconductor foundries. The user adds her circuits as a netlist, and the output is one or more graphs of currents, voltages and other electrical quantities or is saved in a data file.
+</details>
 
-  
-  ## Installation of Ngspice
+  <details>
+<summary><strong>  Installation of Ngspice</strong></summary>
+
 Download the tarball from https://sourceforge.net/projects/ngspice/files/ to a local directory and then follow the commands given below :
-## Dependency for Ngspice:
 
+## Dependency for Ngspice:
 ```
 $ sudo apt-get install libxaw7-dev
 ```
 
 ## Commands for installation:
-
 ```
 $ tar -zxvf ngspice-40.tar.gz
 $ cd ngspice-40
@@ -119,14 +121,16 @@ $ sudo make install
   
 </details>
 
+## Magic
 <details>
-<summary><strong>Magic</strong></summary>
- 
-  ## What is Magic?
-  
-  Magic is a venerable VLSI layout tool, written in the 1980's at Berkeley by John Ousterhout, now famous primarily for writing the scripting interpreter language Tcl. Due largely in part to its liberal Berkeley open-source license, magic has remained popular with universities and small companies. The open-source license has allowed VLSI engineers with a bent toward programming to implement clever ideas and help magic stay abreast of fabrication technology. However, it is the well thought-out core algorithms which lend to magic the greatest part of its popularity. Magic is widely cited as being the easiest tool to use for circuit layout, even for people who ultimately rely on commercial tools for their product design flow. 
+<summary><strong> What is Magic?</strong></summary>  
 
-  ## Commands to install Magic
+Magic is a venerable VLSI layout tool, written in the 1980's at Berkeley by John Ousterhout, now famous primarily for writing the scripting interpreter language Tcl. Due largely in part to its liberal Berkeley open-source license, magic has remained popular with universities and small companies. The open-source license has allowed VLSI engineers with a bent toward programming to implement clever ideas and help magic stay abreast of fabrication technology. However, it is the well thought-out core algorithms which lend to magic the greatest part of its popularity. Magic is widely cited as being the easiest tool to use for circuit layout, even for people who ultimately rely on commercial tools for their product design flow. 
+
+</details>
+
+<details>
+<summary><strong> Commands to install Magic</strong></summary>  
 
 ```
 sudo apt-get install m4
@@ -150,13 +154,15 @@ sudo make install
 
 </details>
 
+## OpenSTA
 <details>
-<summary><strong>OpenSTA</strong></summary>
+<summary><strong>What is OpenSTA?</strong></summary>
 
-## What is OpenSTA?
 OpenSTA is a distributed software testing architecture designed around CORBA, it was originally developed to be commercial software by CYRANO. The current toolset has the capability of performing scripted HTTP and HTTPS heavy load tests with performance measurements from Win32 platforms. However, the architectural design means it could be capable of much more.
+</details>
 
-## Commands to install OpenSTA
+<details>
+<summary><strong>Commands to install OpenSTA</strong></summary>
 
 ## Steps:
 Prior to the installation of the OpenSTA install the dependencies using the command shown below :
@@ -182,15 +188,16 @@ sudo make install
   
 </details>
 
+## OpenLANE
 <details>
-<summary><strong>OpenLANE</strong></strong></summary>
-
-## What is OpenLANE?
+<summary><strong>What is OpenLANE?</strong></strong></summary> 
 
 OpenLane is an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen, CVC, SPEF-Extractor, KLayout and a number of custom scripts for design exploration and optimization. It also provides a number of custom scripts for design exploration and optimization.
 OpenLane abstracts the underlying open source utilities, and allows users to configure all their behavior with just a single configuration file.
+</details>
 
-## Installation of OpenLANE
+<details>
+<summary><strong>Installation of OpenLANE</strong></strong></summary> 
 
 Prior to the installation of the OpenLane install the dependencies and packages using the command shown below :
 
@@ -236,10 +243,10 @@ make test
 
 ## Day 1
 
+## Summary
 <details>
-<summary><strong>Summary</strong></summary>
-
-## Day_1_intro
+<summary><strong>Day_1_intro</strong></summary>
+ 
 In todays Lab i have done simulation and synthesis of 2x1 Mux  using iverilog and yosys respectively. iverilog generates from the RTL design and its testbench a value changing dump file (vcd). gtkwave is the tool used to plot the simulation results of the design.
 
 ## Simulator
@@ -275,6 +282,7 @@ b) slower cells are used at non-critical path where we donot require high       
       
 </details>
 
+## Verilog code
 <details>
 <summary><strong>Verilog code</strong></summary>
 The verilog codes of the 2x1 mux (good_mux.v) and its testbench (tb_good_mux.v) are taken from https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
@@ -343,12 +351,10 @@ endmodule
 ```
 </details>
 
-
+## Simulation
 <details>
-<summary><strong>Simulation</strong></summary>
+<summary><strong>Commands</strong></summary>
 To simulate and view plots of 2x1 mux (good_mux.v) and its testbench (tb_good_mux.v) following commands are used:
-
-## Commands
 
 ```
 $ iverilog good_mux.v tb_good_mux.v
@@ -356,23 +362,22 @@ $ ./a.out
 $ gtkwave tb_good_mux.vcd
 
 ```
-
-## Plot obtained:
-
-![Screenshot from 2023-08-08 23-47-03](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5083f91b-52f1-4343-94de-353008bd834b)
-
-
-
-      
 </details>
 
 <details>
-<summary><strong> Synthesis</strong></strong></summary>
+<summary><strong>Plot obtained:</strong></summary>
+
+![Screenshot from 2023-08-08 23-47-03](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5083f91b-52f1-4343-94de-353008bd834b)
+
+</details>
+
+
+##  Synthesis
+<details>
+<summary><strong>Commands</strong></strong></summary>
  
 
 In the directory of verilog_files (/home/shivangi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files) following commands are used to synthesize and view Synthesized design :
-
-## Commands
 
 ```
 $ yosys
@@ -382,11 +387,18 @@ synth -top good_mux
 yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 yosys> show
 ```
+</details>
 
 
-## Synthesized design
+<details>
+<summary><strong>Synthesized design</strong></strong></summary>
 
 ![Screenshot from 2023-08-09 00-09-18](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/16ddbc34-90bb-47ba-809c-2fed1fa67731)
+
+</details>
+
+<details>
+<summary><strong>Generation of netlist</strong></strong></summary>
 
 
 Now, to generate the netlist following commands are used:
@@ -400,8 +412,10 @@ yosys> !gvim good_mux_netlist.v
 
 ![Screenshot from 2023-08-09 10-02-49](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/9e260074-ba0a-4f5e-8629-7195665ac8ad)
 
+</details>
 
-## Generated Netlist
+<details>
+<summary><strong>Generated Netlist</strong></strong></summary>
 
 ![Screenshot from 2023-08-09 00-18-20](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/22c8fd55-79f5-4f7d-b58d-04b4f8dc837b)
 

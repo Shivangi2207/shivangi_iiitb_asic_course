@@ -10,7 +10,6 @@
 
 [References](#references)
 
-
 ## Day 0
 
 
@@ -44,6 +43,7 @@ $ sudo make install
 
 ![Screenshot from 2023-07-31 09-58-53](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f0898f77-7e00-41a6-8a96-036bb38a882c)
 </details>
+
 
 <details>
   <summary><strong> Icarus verilog</strong></summary>
@@ -245,13 +245,32 @@ In todays Lab i have done simulation and synthesis of 2x1 Mux  using iverilog an
 ## Simulator
 Simulator is the tool used for simulating the design.Here we have used iverilog. RTL design is checked for adherence to the specs by simulting the design.It changes on input signals.Only when the input changes the output is evaluated.
 
-## Design
+## RTL Design
 Design is the actual code or set of verilog codes which has the intended functionality to meet with the required specifications.It may have 1 or more primary inputs and outputs.
 ## Testbench
 Testbench is the setup to apply stimulus to the design to check its functionality.It does not have any primary i/p or o/p.
 
+![Screenshot from 2023-08-09 10-00-22](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/68b1864c-7690-4f67-a25b-b798957bbdde)
+
+
 ## Synthesizer
-It is a tool which is used for converting the RTL To netlist.Here we have used Yosys for synthesizer. In this we use same testbench that we have used during simulation to verify the synthesis. 
+It is a tool which is used for converting the RTL To netlist.Here we have used Yosys for synthesizer. In this we use same testbench that we have used during simulation to verify the synthesis.The design is converted into gates and the connections are made between the gates.This is given out as a file called netlist.
+
+<img src="https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/3e2c91f3-9abc-4367-8201-da4faf13b052" alt="alt text" width="400" height="400">
+
+## .lib 
+Lib file is a short form of Liberty Timing file. Liberty syntax is followed to write a .lib file. It is a collection of logical modules. It includes basic logic gates like And, Or,Not etc. It contains different flavours of gate (slow,fast,medium).
+
+<img src="https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/20e36961-74b3-4eeb-b183-a798594a00ad" width="400" height="400">
+
+
+So based on our requirement we use different flavours of cell.
+
+a) Faster the cells lesser is the delay, but for that we need wider transistors      so the power dissipation will be more too.So faster cells donot come free,they    come at penalty of area and power.More use of faster cell will result in bad      circuit with large area and power dissipation.
+
+b) slower cells are used at non-critical path where we donot require high            performance where delay is not an issue so our power dissipation and area will    also be minimum. But more use of slower cells will make our circuit sluggish.
+
+
 
       
 </details>
@@ -259,6 +278,7 @@ It is a tool which is used for converting the RTL To netlist.Here we have used Y
 <details>
 <summary><strong>Verilog code</strong></summary>
 The verilog codes of the 2x1 mux (good_mux.v) and its testbench (tb_good_mux.v) are taken from https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+
 
 ## Commands to download the lab folder
 
@@ -268,7 +288,61 @@ $ git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
 
 
 ```   
+
+ 
+## Verilog code of good_mux.v and tb_good_mux.v
+
+## Design file
+```
+
+module good_mux (input i0 , input i1 , input sel , output reg y);
+always @ (*)
+begin
+	if(sel)
+		y <= i1;
+	else 
+		y <= i0;
+end
+endmodule
+
+```
+## Test bench
+
+```
+
+`timescale 1ns / 1ps
+module tb_good_mux;
+	// Inputs
+	reg i0,i1,sel;
+	// Outputs
+	wire y;
+
+        // Instantiate the Unit Under Test (UUT)
+	good_mux uut (
+		.sel(sel),
+		.i0(i0),
+		.i1(i1),
+		.y(y)
+	);
+
+	initial begin
+	$dumpfile("tb_good_mux.vcd");
+	$dumpvars(0,tb_good_mux);
+	// Initialize Inputs
+	sel = 0;
+	i0 = 0;
+	i1 = 0;
+	#300 $finish;
+	end
+
+always #75 sel = ~sel;
+always #10 i0 = ~i0;
+always #55 i1 = ~i1;
+endmodule
+
+```
 </details>
+
 
 <details>
 <summary><strong>Simulation</strong></summary>
@@ -308,6 +382,8 @@ synth -top good_mux
 yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 yosys> show
 ```
+
+
 ## Synthesized design
 
 ![Screenshot from 2023-08-09 00-09-18](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/16ddbc34-90bb-47ba-809c-2fed1fa67731)
@@ -321,12 +397,17 @@ yosys> write_verilog -noattr good_mux_netlist.v
 yosys> !gvim good_mux_netlist.v 
 
 ```
+
+![Screenshot from 2023-08-09 10-02-49](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/9e260074-ba0a-4f5e-8629-7195665ac8ad)
+
+
 ## Generated Netlist
 
 ![Screenshot from 2023-08-09 00-18-20](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/22c8fd55-79f5-4f7d-b58d-04b4f8dc837b)
 
       
 </details>
+
 
 
 ## References

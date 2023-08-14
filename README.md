@@ -422,10 +422,77 @@ yosys> !gvim good_mux_netlist.v
       
 </details>
 
+## Day 2
+## Summary
+<details>
+<summary><strong>Day_2_intro</strong></summary>
+In todays lab I have learnt about .lib file and different flavours of gate present in .lib file.
+Along with that i have synthesized a multiple module (made of two submodules) at the multiple module level (both in hierarchical and flattened forms) then at the submodule level. 
+//complete it
+
+## .lib file
+We have used sky130_fd_sc_hd__tt_025C_1v80.lib file. The name of the .lib file represent different parameter as follows:
+
+tt- typical process
+
+025C- temperature
+
+1v80-voltage
+
+![Screenshot from 2023-08-14 21-50-52](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a565ec55-5300-4a98-aff7-e68959c89ec2)
+
+Now .lib file also contains different flavours of gate modules. lets look through some different and gate module present in our .lib file
+
+ ![Screenshot from 2023-08-14 21-56-11](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/1235470d-8fb3-4712-b864-7d9046ecd3fb)
+
+ As shown in the above fig. three types of gate module are there we have and2_0 , and2_2, and2_4. If we carefully look into the figure we will see that the area is less for the 1st one and largest for the 3rd one.So and0_4 is the wide transistor and and2_0 is the narrow one so the and0_4 will be fastest and and2_0 is the slowest and performance of the middle one  is in betwwen these two transistors. So according to our own requirement we will choose what to use and where to use these modules. 
+
+</details>
+
+## Hierarchical vs Flat synthesis
+
+<details>
+	<summary><strong>Hierarchical synthesis</strong></summary>
+ Lets understand the sysnthesis with the of an example. I have synthesized a mutiple_modules.v file whose code is given below. In this we have multiple_modules as a top module in which we have instatiated sub_module1 and sub_module2 which performs And operation and or operation respectively.
+
+```
+module sub_module2 (input a, input b, output y);
+	assign y = a | b;
+endmodule
+
+module sub_module1 (input a, input b, output y);
+	assign y = a&b;
+endmodule
+
+module multiple_modules (input a, input b, input c , output y);
+	wire net1;
+	sub_module1 u1(.a(a),.b(b),.y(net1));  //net1 = a&b
+	sub_module2 u2(.a(net1),.b(c),.y(y));  //y = net1|c ,ie y = a&b + c;
+endmodule
+```
+
+Then I synthesized the file using following commands:
+```
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> read_verilog multiple_modules.v
+yosys> synth -top multiple_modules
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show multiple_modules 
+
+```
+
+This is the schematic as per the port connection in th above module.
+![IMG_20230814_225311](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/6f8e28e9-b723-4421-81d8-d415a3acd52b)
+
+However we get the following schematic instead of the above one. In this we 
+![Screenshot from 2023-08-14 22-43-12](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/39e5911f-865c-4a80-b41e-1fcc4d6f9349)
+
+This is what we call hierarchical design.
+
+</details>
 
 
 ## References
-
 1. https://yosyshq.net/yosys/
 2. https://linux.die.net/man/1/iverilog
 3. https://github.com/steveicarus/iverilog

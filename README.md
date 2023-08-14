@@ -484,13 +484,117 @@ yosys> show multiple_modules
 This is the schematic as per the port connection in th above module.
 ![IMG_20230814_225311](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/6f8e28e9-b723-4421-81d8-d415a3acd52b)
 
-However we get the following schematic instead of the above one. In this we 
+Commands to get the hierarchical netlist:
+```
+yosys> write_verilog -noattr multiple_modules_hier.v
+yosys> !gvim  multiple_modules_hier.v
+```
+However we get the following schematic instead of the above one. 
 ![Screenshot from 2023-08-14 22-43-12](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/39e5911f-865c-4a80-b41e-1fcc4d6f9349)
 
-This is what we call hierarchical design.
+This is what we call hierarchical design.The synthesizer considers the module hierarcy and does the mapping accordting to instantiation. Here is the hierarchical netlist code for the multiple_modules:
+
+```
+module multiple_modules(a, b, c, y);
+	  input a;
+	 input b;
+	 input c;
+	  wire net1;
+	 output y;
+  sub_module1 u1 (.a(a),.b(b),.y(net1) );
+  sub_module2 u2 (.a(net1),.b(c),.y(y));
+endmodule
+
+module sub_module1(a, b, y);
+ wire _0_;
+ wire _1_;
+ wire _2_;
+ input a;
+ input b;
+ output y;
+ sky130_fd_sc_hd__and2_0 _3_ (.A(_1_),.B(_0_),.X(_2_));
+ assign _1_ = b;
+ assign _0_ = a;
+ assign y = _2_;
+endmodule
+
+module sub_module2(a, b, y);
+wire _0_;
+ wire _1_;
+ wire _2_;
+input a;
+input b;
+ output y;
+ sky130_fd_sc_hd__lpflow_inputiso1p_1 _3_ (.A(_1_),.SLEEP(_0_),.X(_2_) );
+ assign _1_ = b;
+ assign _0_ = a;
+ assign y = _2_;
+endmodule
+```
+
+## Flat synthesis
+
+In the flat synthesis hierarchies are flattened out and directly instantiates gates here. The flattened netlist is given below.
+
+```
+
+module multiple_modules(a, b, c, y);
+      wire _0_;
+      wire _1_;
+      wire _2_;
+      wire _3_;
+      wire _4_;
+      wire _5_;
+      input a;
+      wire a;
+      input b;
+      wire b;
+      input c;
+      wire c;
+      wire net1;
+      wire \u1.a ;
+      wire \u1.b ;
+      wire \u1.y ;
+      wire \u2.a ;
+      wire \u2.b ;
+      wire \u2.y ;
+      output y;
+      wire y;
+  sky130_fd_sc_hd__and2_0 _6_ (
+            .A(_1_),
+            .B(_0_),
+            .X(_2_)
+              );
+  sky130_fd_sc_hd__or2_0 _7_ (
+            .A(_4_),
+            .B(_3_),
+            .X(_5_)
+              );
+  assign _4_ = \u2.b ;
+  assign _3_ = \u2.a ;
+  assign \u2.y  = _5_;
+  assign \u2.a  = net1;
+  assign \u2.b  = c;
+  assign y = \u2.y ;
+  assign _1_ = \u1.b ;
+  assign _0_ = \u1.a ;
+  assign \u1.y  = _2_;
+  assign \u1.a  = a;
+  assign \u1.b  = b;
+  assign net1 = \u1.y ;
+endmodule
+```
+The commands for flat synthesis are:
+```
+yosys> flatten
+yosys> write_verilog -noattr multiple_modules_flat.v
+yosys> !vim multiple_modules_flat.v
+```
+This is the synthyesized circuit for a flattened netlist. Here u1 and u2 are flattened and directly or gates are realized.
+
+![Screenshot from 2023-08-15 00-45-04](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/3dcc2b79-a888-470b-b888-9667f159a82a)
 
 </details>
-
 
 ## References
 1. https://yosyshq.net/yosys/

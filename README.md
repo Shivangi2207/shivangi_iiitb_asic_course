@@ -1043,6 +1043,10 @@ endmodule
 ![Screenshot from 2023-08-15 16-46-23](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7c9a0178-a773-4a6e-81e6-f3a7a9b506b9)
 
 ## Synthesis
+![Screenshot from 2023-08-15 17-16-56](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c2fd5e40-a46a-44de-ac10-11ed46f921da)
+
+![Screenshot from 2023-08-15 17-18-26](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/65d7dab5-d87a-4f81-8a5e-ee2298e46896)
+
 
 ## Example 2:
 
@@ -1064,6 +1068,9 @@ endmodule
 ![Screenshot from 2023-08-15 16-53-35](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/1b8dd043-b983-4b1c-9aa5-a9404a475430)
 
 ## Synthesis
+![Screenshot from 2023-08-15 17-20-43](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/6122a530-114b-4821-93eb-7c748f57564b)
+
+![Screenshot from 2023-08-15 17-21-17](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/53e451b4-e77b-4530-ae60-8bc1cb2834d2)
 
 
 ## Example 3:
@@ -1094,6 +1101,10 @@ endmodule
 
  ## Synthesis
 
+ ![Screenshot from 2023-08-15 17-22-33](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/26e3085e-8064-4475-9f0f-a0dad5cc20bc)
+
+
+![Screenshot from 2023-08-15 17-22-59](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a373dfe9-682a-4b0f-b966-d20f25599dad)
 
  ## Example 4:
  ## Code
@@ -1121,6 +1132,11 @@ endmodule
 
 
 ## Synthesis
+![Screenshot from 2023-08-15 17-24-09](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8bd694a1-23be-4cfd-a796-294d895e914c)
+
+
+![Screenshot from 2023-08-15 17-24-26](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/805c84bc-a27d-4e36-88fa-3072ef5d294b)
+
 
 ## Example 5:
 ## Code 
@@ -1148,6 +1164,10 @@ endmodule
 
 ## Synthesis
 
+![Screenshot from 2023-08-15 17-25-07](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/fda7987c-7209-4e89-a1c6-60b7457f740c)
+
+![Screenshot from 2023-08-15 17-25-25](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/767eb92d-8dbd-4866-a345-3512ce7a2cba)
+
  
 </details>
 
@@ -1155,10 +1175,61 @@ endmodule
 
 
 <details>
-<summary><strong>Sequencial optiisation for unsed outputs </strong></summary>
+<summary><strong>Sequencial optimisation for unsed outputs </strong></summary>
 
 
-## code of file 
+## Example 1:
+## Code
+```
+	module counter_opt (input clk , input reset , output q);
+	reg [2:0] count;
+	assign q = count[0];
+	always @(posedge clk ,posedge reset)
+	begin
+		if(reset)
+			count <= 3'b000;
+		else
+			count <= count + 1;
+	end
+	endmodule
+```
+
+## Synthesis
+
+![Screenshot from 2023-08-15 17-33-27](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/4a56108d-b247-4418-bfe0-384a15299886)
+
+ ![Screenshot from 2023-08-15 17-32-24](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c4223175-5c4c-4d37-9c98-295452cb4ff8)
+
+
+ ## Example 2:
+ Updated Counter logic:
+ ```
+module counter_opt (input clk , input reset , output q);
+	reg [2:0] count;
+	assign q = {count[2:0]==3'b100};
+	always @(posedge clk ,posedge reset)
+	begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+	end
+endmodule
+```
+
+ ## Synthesis
+ 
+ ![Screenshot from 2023-08-15 17-43-21](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/2839f35f-9f10-4c31-b731-650b605779ca)
+
+![Screenshot from 2023-08-15 17-39-28](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/e885ec04-0c4e-41fe-9780-a1115d339aa2)
+
+
+</details>
+
+## Day 4
+
+<details>
+<summary><strong>GLS</strong></summary>
  
 </details>
 

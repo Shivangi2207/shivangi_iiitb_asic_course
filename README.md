@@ -603,7 +603,8 @@ This is the synthyesized circuit for a flattened netlist. Here u1 and u2 are fla
 <details>
 <summary><strong>Flipflop simulation and synthesis</strong></summary>
 
-code of asynchronous reset flipflip
+## Asynchronous reset flipflip
+
 ```
 module dff_asyncres_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
 always @ (posedge clk , posedge async_reset)
@@ -617,14 +618,13 @@ begin
 end
 endmodule
 ```
-Plot
+Simulation:
 
 ![Screenshot from 2023-08-15 10-48-40](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/eb2154ac-51bc-4743-abb0-a4c4bb2d4f58)
 
+Here the output q goes low whenever reset is high and will not wait for the clock's posedge, i.e irrespective of clock, the output is changed to low.
 
-//explain
-
-synthesis
+## Synthesis
 
 commands:
 ```
@@ -638,10 +638,11 @@ yosys> show
 ```
 Design obtained with active high reset
 
+## Synthesized circuit:
+
 ![Screenshot from 2023-08-15 11-08-40](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/754f9c96-60ca-41eb-a94f-47b08622417c)
 
-
-code for aynchronous set d flipflop
+## Asynchronous set d flipflop
 
 ```
 module dff_async_set ( input clk ,  input async_set , input d , output reg q );
@@ -655,15 +656,15 @@ end
 endmodule
 
 ```
-plots
+## Simulation
 
 ![Screenshot from 2023-08-15 10-52-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7e89ef11-e8c1-44f8-92b2-62d7113e1bf0)
 
 
 
- //explain
+ Here the output q goes high whenever set is high and will not wait for the clock's posedge, i.e irrespective of clock, the output is changed to high.
 
- synthesis
+ ## Synthesis
  commands
  ```
 $yosys
@@ -674,12 +675,12 @@ yosys> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 yosys> show
 ```
-design obtained
+## Synthesized circuit:
 
 ![Screenshot from 2023-08-15 11-12-22](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8e3d6e87-0d20-489b-8b36-2e491667ea3f)
 
 
- code for synchronous reset
+## Synchronous reset
 ```
 module dff_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
 always @ (posedge clk )
@@ -691,12 +692,14 @@ begin
 end
 endmodule
 ```
-plot
+## Simulation:
 
  ![Screenshot from 2023-08-15 10-58-17](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/683a4cab-630d-4def-853a-63175fb6ed64)
-//explain
 
-snthesis
+Here the output q goes low whenever reset is high and at the positive edge of the clock. Here the reset of the output depends on the clock.
+
+## Synthesis
+
 commands
 ```
 
@@ -710,11 +713,11 @@ yosys> show
 ```
 
 
-design
+## Synthesized circuit:
 ![Screenshot from 2023-08-15 11-22-05](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/63033669-59ea-4673-80d3-d8861c2d9aba)
 
 
-code for dff with both synchronous and asynchronous reset
+## Dff with both synchronous and asynchronous reset
 ```
 module dff_asyncres_syncres.v ( input clk , input async_reset , input sync_reset , input d , output reg q );
 always @ (posedge clk , posedge async_reset)
@@ -730,13 +733,14 @@ endmodule
 
 ```
 
-plots
+## Simulation
 
 ![Screenshot from 2023-08-15 11-31-42](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8089ae2a-10b3-4b9f-b4c4-d53181373aac)
 
-//explain
+Here the output q goes low whenever asynchronous reset is high where output doesn't depend on clock and also when synchronous reset is high and posedge of clock occurs.
 
-synthesis
+## Synthesis
+
 commands
 ```
 
@@ -749,21 +753,21 @@ yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 yosys> show
 
 ```
-design
+
+## Simulation
 ![Screenshot from 2023-08-15 11-30-15](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/62ff37ff-89aa-4d17-b44d-4de34f44bf6f)
 
 
-Optimisation
+## Some interseting Optimisation
+In this we have deal with some automatic and intersetion optimisation. Here are some examples: Like multiplying a number with 2 does not need any hardware and only can be done by adding 0's in the a like if we multiply it by 4 then we will add 2 0's from back and for multiplication with 8 we have to add three 0's to a from back. 
 
-synthesis of module2
-code
+## Code
 ```
 module mul2 (input [2:0] a, output [3:0] y);
 	assign y = a * 2;
 endmodule
 ```
-
-code of generated netlist
+## Netlist for the above Schematic:
 ```
 module mul2(a, y);
   input [2:0] a;
@@ -773,13 +777,20 @@ module mul2(a, y);
   assign y = { a, 1'h0 };
 endmodule
 ```
-generated netlist
+## Synthesized circuit:
 
 ![Screenshot from 2023-08-15 12-02-19](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/20284045-da51-471e-8f25-034c8f0b2432)
 
-synthesis of module8
- code 
- ```
+Multiplication by 8
+ 
+
+## Schematic
+
+
+![Screenshot from 2023-08-15 12-08-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a699daf3-2a2b-468b-9e6d-e45118501a1c)
+
+## Netlist for the above Schematic:
+```
 module mult8(a, y);
   input [2:0] a;
   wire [2:0] a;
@@ -787,12 +798,7 @@ module mult8(a, y);
   wire [5:0] y;
   assign y = { a, a };
 endmodule
-
 ```
-generated netlist
-
-
-![Screenshot from 2023-08-15 12-08-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a699daf3-2a2b-468b-9e6d-e45118501a1c)
 
 
 </details>
@@ -833,10 +839,32 @@ Boolean function minimizing methods include:
  </details>
 <details>
 <summary><strong>Sequential logic optimisation</strong></summary>
+sequential logic optimization method has been presented that is based on selectively precomputing the output logic values of the circuit one clock cycle before they are required, and using the precomputed values to reduce internal switching activity in the succeeding clock cycle
+It is done by various means:
+1. sequential constant propagation
+Let's understand this using an example
+
+![IMG_20230815_145417](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/191cb347-68d8-432e-bab3-9316295bb3b4)
+
+In the 1st Dff Q will always be 0 when reset is high Q become 0 also when reset is not high it will be 0 again as D is grounded . So Q=0 is propagated to nand gate so our output will always be 1. But this is not the case with the 2nd Dff as in this Q=1 when set is high and Q=0 when set is not applied and D is grounded.
+
+So in the 1st Dff Q pin is constant so it can be optimised furthur , but  the 2nd Dff can't be optimised as its Q pin is not constant.
+
+2. State optimisation
+In this optimisation of unused states are done.
+
+3. Cloning
+4. 
 
  
 </details>
 
+ 
+</details>
+<details>
+<summary><strong>Combinational logic optimisation lab work</strong></summary>
+
+## code of file 
  
 </details>
 

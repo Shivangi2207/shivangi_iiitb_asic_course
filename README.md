@@ -1369,8 +1369,59 @@ endmodule
 <details>
 	<summary><strong> If Case constructs</strong>
 	</summary>
+ If statement is used to conditionally execute a block of code based on a given condition.
+```
+if (condition)
+    // Code to be executed if the condition is true
+else
+    // Code to be executed if the condition is false
+```
+	
+## Precautions with "If"
+Due to incomplete if statements i.e. when we use "if" without "else" statements, it inferes latches which affects the working of code. But there are some conditions where we require latches like counters.
+
+
 </details>
 
+<details>
+	<summary><strong>Labs on "Incomplete If Case"</strong></summary>
+
+ ## Example 1:
+```
+module incomp_if (input i0 , input i1 , input i2 , output reg y);
+always @ (*)
+begin
+	if(i0)
+		y <= i1;
+end
+endmodule
+```
+## Simulation
+
+## Synthesis
+
+
+## Example 2:
+```
+module incomp_if2 (input i0 , input i1 , input i2 , input i3, output reg y);
+	always @ (*)
+	begin
+		if(i0)
+			y <= i1;
+		else if (i2)
+			y <= i3;
+	end
+endmodule
+```
+## Simulation
+
+
+## Synthesis
+
+
+
+ 
+</details>
 ## References
 1. https://yosyshq.net/yosys/
 2. https://linux.die.net/man/1/iverilog

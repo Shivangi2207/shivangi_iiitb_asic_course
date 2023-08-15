@@ -1229,10 +1229,147 @@ endmodule
 ## Day 4
 
 <details>
-<summary><strong>GLS</strong></summary>
- 
+<summary><strong>GLS</strong></summary><br>
+
+## GLS
+	
+1. We will run the test bench with netlist as design under test.
+2. Netlist is logically same as RTL code.
+3. Gate level verilog models can be timing aware or functional.
+
+Why GLS?
+
+To verify the logical correctness of the design after synthesis
+   
+To meet the timing requirements of the design, this is done using delay annotation.
+   
+To test the funcionality of the netlist because there can be synthesis-simulation mismatch
+
+GLS using iverilog
+
+If the Gate Level Models are delay annotated,then we can use GLS for timing validation
+
+![Screenshot from 2023-08-15 18-12-11](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/97a73bbe-7aac-4156-aa9f-e863ea2b9456)
+
+## Synthesis Simulation Mismatch
+
+Synthesis simulation mismatch refers to a discrepancy or misalignment between the expected behavior of a system or device, as predicted by a simulation or modeling process, and the actual behavior observed in the physical implementation or real-world operation of that system or device. This term is often used in fields such as electronics, engineering, and computer science, where simulations are employed to model the behavior of complex systems before they are physically constructed or deployed.
+
+There are three main reasons for Synthesis Simulation Mismatch:
+
+1 Missing sensitivity list in always block:
+
+In below code there is a sensitivity mismatch
+As  always block will execute only when sel changes so the block inside will not execute to give proper output of a mux 
+
+![Screenshot from 2023-08-15 18-23-02](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/d306ad6d-2da3-4f48-b479-0d2af150094a)
+
+2 Blocking vs Non-Blocking Assignments:
+Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches. 
+
+3 Non standard Verilog coding
+
+</details>
+<details>
+<summary><strong>Labs on GLS and Synthesis-Simulation Mismatch
+</strong></summary>
+
+## Example 1:
+```
+module ternary_operator_mux (input i0 , input i1 , input sel , output y);
+	assign y = sel?i1:i0;
+endmodule
+```
+## Simulation
+
+
+
+ ![Screenshot from 2023-08-15 19-01-24](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/35015884-20b4-49eb-989d-4c95c3f86d96)
+
+## Synthesis
+![Screenshot from 2023-08-15 19-06-06](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8f628a0c-5a6f-4acc-996f-28fc625d2584)
+
+
+ ![Screenshot from 2023-08-15 19-07-49](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/0237a8e3-b176-4726-85cc-b5b20f6d3650)
+
+ ## Netlist Simulation
+ ![Screenshot from 2023-08-15 19-24-44](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/bffd8e42-0e83-41db-bc9f-aa16a5dbafdb)
+
+As we can see there is no mismatch in  the simulation.
+
+## Example 2:
+## Code
+```
+module bad_mux (input i0 , input i1 , input sel , output reg y);
+	always @ (sel)
+	begin
+		if(sel)
+			y <= i1;
+		else 
+			y <= i0;
+	end
+endmodule
+```
+## Simulation
+
+![Screenshot from 2023-08-15 19-31-45](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a7260a44-29e0-4264-9358-3e24d103e2b8)
+
+## Synthesis
+![Screenshot from 2023-08-15 19-34-57](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/63053bd8-342d-447a-8792-43c96a526f77)
+
+![Screenshot from 2023-08-15 19-41-52](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/756123eb-1a32-406b-8e1a-6a8e12d48c9f)
+
+## Netlist Simulation
+![Screenshot from 2023-08-15 19-39-25](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/df1c42c5-ef7e-4b50-94d7-733459ece727)
+
+Here first pic shows the netlist simulation which corrects the bad_mux design which was only changing waveform when sel was triggered while for a mux to work properly it should be sensitivity to all the input signals
+
+
+
+</details>
+<details>
+<summary><strong>Labs on synth-sim mismatch for blocking statement
+</strong></summary>
+
+Here the output is depending on the past value of x which is dependednt on a and b and it appears like a flop.
+
+## Example 1:
+```
+module blocking_caveat (input a , input b , input  c, output reg d); 
+reg x;
+always @ (*)
+	begin
+	d = x & c;
+	x = a | b;
+end
+endmodule
+```
+## Simulation
+
+![Screenshot from 2023-08-15 19-50-51](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a310caf4-0a6a-4ee5-84a1-892dafa6e6b7)
+
+
+## Synthesis
+
+![Screenshot from 2023-08-15 19-51-48](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/6564e452-66c6-4a81-b1fd-6944d2450320)
+
+![Screenshot from 2023-08-15 19-52-16](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/da278c5c-4061-4b95-ba4d-8349130ea1ee)
+
+
+## Netlist simulation
+
+ ![Screenshot from 2023-08-15 19-53-52](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8d3a2da1-d37a-4255-8dcb-15c8af9c35a2)
+
+ Here this how the circuit should behave but this correct waveform is only obtained while doing netlist simulation. Here first pic show the netlist simulation which shows the proper working of the dut while the last pic shows the improper working of dut as we have used blocking statement here which causes synthesis simulation mismatch which is sorted out by GLS while providing netlist simulation
+
 </details>
 
+## Day 5
+
+<details>
+	<summary><strong> If Case constructs</strong>
+	</summary>
+</details>
 
 ## References
 1. https://yosyshq.net/yosys/

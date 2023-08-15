@@ -609,6 +609,8 @@ This is the synthyesized circuit for a flattened netlist. Here u1 and u2 are fla
 
 ## Why flops?
 
+Flip-flops are used as memory elements in sequential circuit. The output is obtained in a sequential circuit from combinational circuit or flip-flop or both. The state of flip-flop changes at active state of clock pulses and remains unaffected when the clock pulse is not active.Flip-flops are the quintessential edge-triggered logic. Along with the fact that they have memory, this makes them the gate-keeper component that can block when there is no clock edge, sample signals on the clock edge, and preserve the output signal away from a clock edge. Flip-flops allow the the clock control the flow of signals from one component to the next.
+
 <details>
 <summary><strong>Flipflop simulation and synthesis</strong></summary>
 
@@ -1378,7 +1380,11 @@ endmodule
 <details>
 	<summary><strong> If Case constructs</strong>
 	</summary>
- If statement is used to conditionally execute a block of code based on a given condition.
+
+ ## IF Statement
+If statement is used to conditionally execute a block of code based on a given condition.
+
+## Syntax
 ```
 if (condition)
     // Code to be executed if the condition is true
@@ -1388,6 +1394,31 @@ else
 	
 ## Precautions with "If"
 Due to incomplete if statements i.e. when we use "if" without "else" statements, it inferes latches which affects the working of code. But there are some conditions where we require latches like counters.
+
+## Case Statement
+It is used in "always" block.
+Variable which is used in case statement should be a reg.
+
+## Syntax
+```
+ case(choice)
+   choice1: begin
+   --------
+   --------
+   end
+   choice2: begin
+   --------
+   --------
+   end
+   default: <statements>
+ endcase
+```
+## Precautions with "Case"
+
+Incomplete case also inferes latches and to avoid that we should use default statement in case.
+Partial Assignments: If some of the outputs are not assigned any value in some of the segments of case then it inferes latches which can affect the working of code.
+We should not have overlapping cases as unlike "If" statements no priority is given to any condition hence it will check all the cases even if it matches the one condition, which in return gives unpredictable outputs.
+
 
 
 </details>
@@ -1574,7 +1605,40 @@ endmodule
 <details>
 <summary><strong> For loop and for generate </strong></summary>
 
+## For loop
+Procedural 'for' loops are runtime evaluated as often as
+neccesary when the procedural block is activated. They can be fully dynamic.
+They MUST appear in a procedural block - thus have more limited use. 
+It is used in "always" block.
+It is used for evaluating expression multiple times.
 
+## Syntax
+```
+for (<initiaization>, <condition>, <update>)begin
+ \\ expression to be evaluated
+end
+```
+
+
+## For generate
+Generate loops are evaluated at compile / elaboration time. NOT
+at runtime. So the loops limits must be fully "known" at elaboration time.
+You're just about unlimited as to what can go inside a generate loop.
+It is used outside the "always" block.
+It is used for instantiating hardware multiple times.
+
+
+## Syntax
+
+```
+genvar k;
+generate 
+    for (k = 0; k < 4; k++) begin
+       \\ statements to be executed
+       end
+   end
+endgenerate
+```
  
 </details>
 

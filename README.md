@@ -822,11 +822,15 @@ endmodule
 
 Logic optimization is a process of finding an equivalent representation of the specified logic circuit under one or more specified constraints. This process is a part of a logic synthesis          applied in digital electronics and integrated circuit design. 
 There are two types of optimisation logic
-	
-<details><summary><strong>1. Combinational logic optimisation with example</strong></summary><br>
+
+ ## What Combinational logic optimisation?
+ 
+<details><summary><strong>Combinational logic optimisation with example</strong></summary><br>
  	In this the logic gates get squeezed  to get the most optimized design that results in area and power saving.
   It is done by two means:
-  1. constant propagation logic optimisation
+  
+## 1. Constant propagation logic optimisation
+  
   Constant Propagation is an optimization technique employed by synthesis tools to minimize hardware implementation. This is achieved by optimizing away the logic for which parameters are configured to keep it disabled.
 
 let's understand it by an example:
@@ -835,7 +839,8 @@ In this example we fixed one of our input A to 0 then progate it to the output. 
 
 ![IMG_20230815_131136](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f21a189f-ccb8-4959-99a9-406fd5a07898)
 
-2.Boolean logic optimisation
+## 2.Boolean logic optimisation
+
 The optimization methods that consider logic functions as well as their representations are called "Boolean methods"
 Boolean function minimizing methods include: 
  a. Karnaugh maps
@@ -1011,6 +1016,9 @@ yosys:show
 
 
  </details>
+
+ ## What is Sequential logic optimisation?
+ 
 <details>
 <summary><strong>Sequential logic optimisation with example</strong></summary>
 sequential logic optimization method has been presented that is based on selectively precomputing the output logic values of the circuit one clock cycle before they are required, and using the precomputed values to reduce internal switching activity in the succeeding clock cycle
@@ -1024,16 +1032,16 @@ In the 1st Dff Q will always be 0 when reset is high Q become 0 also when reset 
 
 So in the 1st Dff Q pin is constant so it can be optimised furthur , but  the 2nd Dff can't be optimised as its Q pin is not constant.
 
-1. State optimisation:
+## 1. State optimisation:
 
 In this optimisation of unused states are done.
 
-3. Cloning:
+## 2. Cloning:
 
 This is done when performing PHYSICAL AWARE SYNTHESIS. Lets consider a flop A which is connected to flop B and flop C through a combination logic. If B and C are placed far from A in the flooerplan, there is a routing path delay. To avoid this, we connect A to two intermediate flops and then from these flops the output is sent to B and C thereby decreasing the delay. This process is called cloning since we are generating two new flops with same functionality as A.
 
 
-3.Retiming: 
+## 3.Retiming: 
 Retiming is a powerful sequential optimization technique used to move registers across the combinational logic or to optimize the number of registers to improve performance via power-delay trade-off, without changing the input-output behavior of the circuit. 
 
 ## Example 1:
@@ -1239,6 +1247,7 @@ endmodule
 
 ## Day 4
 
+
 <details>
 <summary><strong>GLS</strong></summary><br>
 
@@ -1248,7 +1257,7 @@ endmodule
 2. Netlist is logically same as RTL code.
 3. Gate level verilog models can be timing aware or functional.
 
-Why GLS?
+## Why GLS?
 
 To verify the logical correctness of the design after synthesis
    
@@ -1256,7 +1265,7 @@ To meet the timing requirements of the design, this is done using delay annotati
    
 To test the funcionality of the netlist because there can be synthesis-simulation mismatch
 
-GLS using iverilog
+## GLS using iverilog
 
 If the Gate Level Models are delay annotated,then we can use GLS for timing validation
 
@@ -1268,14 +1277,14 @@ Synthesis simulation mismatch refers to a discrepancy or misalignment between th
 
 There are three main reasons for Synthesis Simulation Mismatch:
 
-1 Missing sensitivity list in always block:
+## 1 Missing sensitivity list in always block:
 
 In below code there is a sensitivity mismatch
 As  always block will execute only when sel changes so the block inside will not execute to give proper output of a mux 
 
 ![Screenshot from 2023-08-15 18-23-02](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/d306ad6d-2da3-4f48-b479-0d2af150094a)
 
-2 Blocking vs Non-Blocking Assignments:
+## 2 Blocking vs Non-Blocking Assignments:
 Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches. 
 
 3 Non standard Verilog coding

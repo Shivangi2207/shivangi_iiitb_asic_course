@@ -808,11 +808,11 @@ endmodule
 ## Day 3
 
 ## Optimisation
-<details>
-	<summary><strong>Optimisation logic techniques</strong></summary><br>
-	Logic optimization is a process of finding an equivalent representation of the specified logic circuit under one or more specified constraints. This process is a part of a logic synthesis          applied in digital electronics and integrated circuit design. 
-	There are two types of optimisation logic
-	<details><summary><strong>1. Combinational logic optimisation</strong></summary><br>
+
+Logic optimization is a process of finding an equivalent representation of the specified logic circuit under one or more specified constraints. This process is a part of a logic synthesis          applied in digital electronics and integrated circuit design. 
+There are two types of optimisation logic
+	
+<details><summary><strong>1. Combinational logic optimisation with example</strong></summary><br>
  	In this the logic gates get squeezed  to get the most optimized design that results in area and power saving.
   It is done by two means:
   1. constant propagation logic optimisation
@@ -835,10 +835,173 @@ Boolean function minimizing methods include:
  
 ![IMG_20230815_131122](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7298588e-8a12-4a10-838b-2085b225d765)
 
-	
+Here we will be doing the labs that illustrate combinational logic optimizations.
+
+## Example 1:
+## Code
+```
+module opt_check (input a , input b , output y);
+	assign y = a?b:0;
+endmodule
+```
+
+## Commands to run
+```
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check.v
+yosys> synth -top opt_check
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> show
+```
+## Obtained schematic
+ 
+ ![Screenshot from 2023-08-15 15-58-12](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/b7a9d8b3-77e6-4d9b-ac4f-4e1fc317b8af)
+
+## Example 2:
+## Code
+
+```
+module opt_check2 (input a , input b , output y);
+	assign y = a?1:b;
+endmodule
+```
+
+## Commands:
+```
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check2.v
+yosys> synth -top opt_check2
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> show
+
+```
+## Obtained schematic
+![Screenshot from 2023-08-15 16-05-53](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/81414174-421d-414b-bb57-6f178b678d91)
+
+## Example 3:
+## Code
+```
+module opt_check3 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+## Commands:
+```
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check3.v
+yosys> synth -top opt_check3
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> show
+
+
+```
+## Obtained schematic
+
+![Screenshot from 2023-08-15 16-11-55](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c32afba8-6da7-4ac4-907d-030f61cec27e)
+
+## Example 4:
+## Code
+```
+module opt_check4 (input a , input b , input c , output y);
+	assign y = a?(b?(a & c ):c):(!c);
+endmodule
+```
+
+##  Commands
+```
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check4.v
+yosys> synth -top opt_check4
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> show
+```
+## Obtained schematic
+
+![Screenshot from 2023-08-15 16-17-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/e7724271-df4e-4da0-bdbb-e1823f45b7a4)
+
+## Example 5:
+## Code
+```
+module sub_module(input a , input b , output y);
+	assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a , input b , input c , input d , output y);
+	wire n1,n2,n3;
+	sub_module U1 (.a(a) , .b(1'b0) , .y(n1));
+	sub_module U2 (.a(b), .b(c) , .y(n2));
+	sub_module U3 (.a(n2), .b(d) , .y(n3));
+	sub_module U4 (.a(n3), .b(n1) , .y(y));
+endmodule
+```
+
+
+## Commands
+```
+yosys:read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys:read_verilog multiple_module_opt2.v
+yosys:synth -top multiple_module_opt2
+yosys:abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys:flatten
+yosys:opt_clean -purge
+yosys:show
+
+```
+## Before flatten
+
+![Screenshot from 2023-08-15 16-27-08](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/353b02c6-d5f0-4a28-ae4f-4eed22e3b5ce)
+
+
+
+## After Flatten
+
+
+![Screenshot from 2023-08-15 16-24-37](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/14ba880d-2539-4801-9d3a-b5d7ee74401d)
+
+
+## Example 6:
+## Code
+```
+	module sub_module1(input a , input b , output y);
+	 assign y = a & b;
+	endmodule
+
+	module sub_module2(input a , input b , output y);
+	 assign y = a^b;
+	endmodule
+
+	module multiple_module_opt(input a , input b , input c , input d , output y);
+	wire n1,n2,n3;
+	sub_module1 U1 (.a(a) , .b(1'b1) , .y(n1));
+	sub_module2 U2 (.a(n1), .b(1'b0) , .y(n2));
+	sub_module2 U3 (.a(b), .b(d) , .y(n3));
+
+	assign y = c | (b & n1); 
+	endmodule
+```
+## Commands
+```
+yosys:read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys:read_verilog multiple_module_opt.v
+yosys:synth -top multiple_module_opt
+yosys:abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys:flatten
+yosys:opt_clean -purge
+yosys:show
+
+```
+## Before flatten
+![Screenshot from 2023-08-15 16-30-20](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5780d3be-a35a-4846-b400-2ed25ad80c00)
+
+
+## After Flatten
+![Screenshot from 2023-08-15 16-30-59](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/60d32fb1-0ace-433d-8acf-409436635091)
+
+
+
  </details>
 <details>
-<summary><strong>Sequential logic optimisation</strong></summary>
+<summary><strong>Sequential logic optimisation with example</strong></summary>
 sequential logic optimization method has been presented that is based on selectively precomputing the output logic values of the circuit one clock cycle before they are required, and using the precomputed values to reduce internal switching activity in the succeeding clock cycle
 It is done by various means:
 1. sequential constant propagation
@@ -850,19 +1013,150 @@ In the 1st Dff Q will always be 0 when reset is high Q become 0 also when reset 
 
 So in the 1st Dff Q pin is constant so it can be optimised furthur , but  the 2nd Dff can't be optimised as its Q pin is not constant.
 
-2. State optimisation
+1. State optimisation:
+
 In this optimisation of unused states are done.
 
-3. Cloning
-4. 
+3. Cloning:
+
+This is done when performing PHYSICAL AWARE SYNTHESIS. Lets consider a flop A which is connected to flop B and flop C through a combination logic. If B and C are placed far from A in the flooerplan, there is a routing path delay. To avoid this, we connect A to two intermediate flops and then from these flops the output is sent to B and C thereby decreasing the delay. This process is called cloning since we are generating two new flops with same functionality as A.
+
+
+3.Retiming: 
+Retiming is a powerful sequential optimization technique used to move registers across the combinational logic or to optimize the number of registers to improve performance via power-delay trade-off, without changing the input-output behavior of the circuit. 
+
+## Example 1:
+Here flop will be inferred as the output is not constant.
+
+```
+module dff_const1(input clk, input reset, output reg q);
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+			q <= 1'b0;
+		else
+			q <= 1'b1;
+	end
+endmodule
+```
+## Simulation
+![Screenshot from 2023-08-15 16-46-23](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7c9a0178-a773-4a6e-81e6-f3a7a9b506b9)
+
+## Synthesis
+
+## Example 2:
+
+
+## Code
+```
+module dff_const2(input clk, input reset, output reg q);
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+			q <= 1'b1;
+		else
+			q <= 1'b1;
+	end
+endmodule
+```
+## Simulation
+
+![Screenshot from 2023-08-15 16-53-35](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/1b8dd043-b983-4b1c-9aa5-a9404a475430)
+
+## Synthesis
+
+
+## Example 3:
+
+## Code
+```
+	module dff_const3(input clk, input reset, output reg q);
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b0;
+		end
+		else
+		begin
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+	endmodule
+```
+ ##  Simulation
+![Screenshot from 2023-08-15 16-56-35](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a38c62ad-f15e-4bf3-8fcb-2b276689f272)
+
+
+ ## Synthesis
+
+
+ ## Example 4:
+ ## Code
+ ```
+	module dff_const4(input clk, input reset, output reg q);
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b1;
+		end
+	else
+		begin
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+	endmodule
+```
+## Simulation
+![Screenshot from 2023-08-15 16-57-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/30c4cbee-240a-4cbf-ba9b-5a536f92446c)
+
+
+## Synthesis
+
+## Example 5:
+## Code 
+```
+	module dff_const5(input clk, input reset, output reg q);
+	reg q1;
+	always @(posedge clk, posedge reset)
+		begin
+			if(reset)
+			begin
+				q <= 1'b0;
+				q1 <= 1'b0;
+			end
+		else
+			begin
+				q1 <= 1'b1;
+				q <= q1;
+			end
+		end
+	endmodule
+```
+## Simulation
+
+![Screenshot from 2023-08-15 17-00-45](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/d3f13139-1ed9-4a11-9bc3-4534ac29e822)
+
+## Synthesis
 
  
 </details>
 
  
-</details>
+
+
 <details>
-<summary><strong>Combinational logic optimisation lab work</strong></summary>
+<summary><strong>Sequencial optiisation for unsed outputs </strong></summary>
+
 
 ## code of file 
  

@@ -1397,8 +1397,24 @@ end
 endmodule
 ```
 ## Simulation
+![Screenshot from 2023-08-15 20-29-55](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c6fccfc4-09f1-4737-823b-c68210fdb7c4)
+
 
 ## Synthesis
+
+```
+yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> read_verilog incomp_if.v 
+yosys> synth -top incomp_if
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr incomp_if_net.v
+yosys> show
+```
+
+![Screenshot from 2023-08-15 20-35-00](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a741528b-6eea-4b64-a38c-158ef33980bf)
+
+![Screenshot from 2023-08-15 20-35-23](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/df31b037-23b6-4d50-bea7-9d4a458be790)
 
 
 ## Example 2:
@@ -1414,14 +1430,273 @@ module incomp_if2 (input i0 , input i1 , input i2 , input i3, output reg y);
 endmodule
 ```
 ## Simulation
+![Screenshot from 2023-08-15 20-39-58](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/3f6f4348-7ebc-40ab-8360-b64dec64caa9)
+
+
+## Synthesis
+```
+yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> read_verilog incomp_if2.v 
+yosys> synth -top incomp_if2
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> write_verilog -noattr incomp_if2_net.v
+yosys> show
+```
+
+![Screenshot from 2023-08-15 20-40-45](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/da9d3596-d78e-4a79-ace0-45957e894a5e)
+
+![Screenshot from 2023-08-15 20-41-10](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/2c489024-2261-4972-9baa-8d33117c699f)
+
+
+ 
+</details>
+
+<details><summary><strong>Labs on "Incomplete overlapping Case"
+</strong></summary>
+
+## Example 1:
+
+```
+module incomp_case (input i0 , input i1 , input i2 , input [1:0] sel, output reg y);
+	always @ (*)
+	begin
+	case(sel)
+		2'b00 : y = i0;
+		2'b01 : y = i1;
+	endcase
+	end
+endmodule
+```
+## Simulation
+![Screenshot from 2023-08-15 21-32-39](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/913dbab0-a435-4e1d-bd11-a5b1ace56ca9)
+
+
+## Synthesis
+![Screenshot from 2023-08-15 21-33-34](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/97f78006-4a8a-4179-aa1f-c2b66deef203)
+
+![Screenshot from 2023-08-15 21-34-01](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/26eee149-2e0e-4f9c-b70d-ee6d70c795d0)
+
+
+## Example 2:
+```
+module comp_case (input i0 , input i1 , input i2 , input [1:0] sel, output reg y);
+always @ (*)
+begin
+	case(sel)
+		2'b00 : y = i0;
+		2'b01 : y = i1;
+		default : y = i2;
+	endcase
+end
+endmodule
+```
+
+## Simulation
+![Screenshot from 2023-08-15 21-42-09](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c781cf03-fbc0-4d4c-a279-bbacd3edb0d2)
+
+
+
+## Synthesis
+
+![Screenshot from 2023-08-15 21-36-46](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/c50b7ade-d910-4111-b0df-29972f4382c2)
+
+![Screenshot from 2023-08-15 21-37-00](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/5ff993bf-b9e4-4379-be2e-e8aeb68b69c6)
+
+
+## Example 3:
+```
+module partial_case_assign (input i0 , input i1 , input i2 , input [1:0] sel, output reg y , output reg x);
+always @ (*)
+begin
+	case(sel)
+		2'b00 : begin
+			y = i0;
+			x = i2;
+			end
+		2'b01 : y = i1;
+		default : begin
+	         	  x = i1;
+			  y = i2;
+		 	 end
+	endcase
+end
+endmodule
+```
+
+## Simulation
+
+![Screenshot from 2023-08-15 21-51-14](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/771ffa67-f694-409d-9bbe-c25037372d6d)
+
+
+## Synthesis
+![Screenshot from 2023-08-15 21-38-05](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/697dc64a-f0b1-4862-96aa-3844f74b1772)
+![Screenshot from 2023-08-15 21-38-23](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f15971a6-c60c-47d2-946e-c2a88182fcab)
+
+
+## Example 4:
+```
+module bad_case (input i0 , input i1, input i2, input i3 , input [1:0] sel, output reg y);
+always @(*)
+begin
+	case(sel)
+		2'b00: y = i0;
+		2'b01: y = i1;
+		2'b10: y = i2;
+		2'b1?: y = i3;
+		//2'b11: y = i3;
+	endcase
+end
+endmodule
+```
+
+## Simulation
+
+
+![Screenshot from 2023-08-15 21-53-08](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f26109b2-c0c8-4e84-9f69-874724b91aea)
+
+## Synthesis
+
+![Screenshot from 2023-08-15 21-39-13](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a5084adb-d835-47c3-a85b-bec44c058fe3)
+
+![Screenshot from 2023-08-15 21-39-39](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/503e4600-5f8a-4c0c-85dc-4cd9007a2010)
+
+</details>
+<details>
+<summary><strong> For loop and for generate </strong></summary>
+
+
+ 
+</details>
+
+<details><summary><strong>Labs on "for loop" and "for generate" 
+</strong></summary>
+
+
+## Example 1:
+
+```
+module mux_generate (input i0 , input i1, input i2 , input i3 , input [1:0] sel  , output reg y);
+	wire [3:0] i_int;
+	assign i_int = {i3,i2,i1,i0};
+	integer k;
+always @ (*)
+	begin
+	for(k = 0; k < 4; k=k+1) begin
+		if(k == sel)
+		y = i_int[k];
+		end
+	end
+endmodule
+```
+
+## Simulation
+
+![Screenshot from 2023-08-15 22-01-54](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/df4df0a6-1f4a-47c7-8b74-3e1c789cb73f)
+
+## Synthesis
+
+
+
+
+## Example 2:
+
+```
+module demux_case (output o0 , output o1, output o2 , output o3, output o4, output o5, output o6 , output o7 , input [2:0] sel  , input i);
+reg [7:0]y_int;
+assign {o7,o6,o5,o4,o3,o2,o1,o0} = y_int;
+integer k;
+always @ (*)
+begin
+y_int = 8'b0;
+case(sel)
+	3'b000 : y_int[0] = i;
+	3'b001 : y_int[1] = i;
+	3'b010 : y_int[2] = i;
+	3'b011 : y_int[3] = i;
+	3'b100 : y_int[4] = i;
+	3'b101 : y_int[5] = i;
+	3'b110 : y_int[6] = i;
+	3'b111 : y_int[7] = i;
+endcase
+end
+endmodule
+
+```
+
+## Simulation
+![Screenshot from 2023-08-15 22-03-25](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/e0c787eb-11d7-462e-9c54-72248f9070a1)
 
 
 ## Synthesis
 
 
 
- 
+
+
+## Example 3:
+
+```
+module demux_generate (output o0 , output o1, output o2 , output o3, output o4, output o5, output o6 , output o7 , input [2:0] sel  , input i);
+reg [7:0]y_int;
+assign {o7,o6,o5,o4,o3,o2,o1,o0} = y_int;
+integer k;
+always @ (*)
+begin
+	y_int = 8'b0;
+	for(k = 0; k < 8; k++) begin
+		if(k == sel)
+		y_int[k] = i;
+	end
+end
+endmodule
+```
+
+## Simulation
+
+![Screenshot from 2023-08-15 22-05-25](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/e0a00833-d257-418a-b46c-3277140c1ef9)
+
+## Synthesis
+
+
+
+
+## Example 4:
+
+```
+module rca (input [7:0] num1 , input [7:0] num2 , output [8:0] sum);
+wire [7:0] int_sum;
+wire [7:0]int_co;
+
+genvar i;
+generate
+	for (i = 1 ; i < 8; i=i+1) begin
+		fa u_fa_1 (.a(num1[i]),.b(num2[i]),.c(int_co[i-1]),.co(int_co[i]),.sum(int_sum[i]));
+	end
+
+endgenerate
+fa u_fa_0 (.a(num1[0]),.b(num2[0]),.c(1'b0),.co(int_co[0]),.sum(int_sum[0]));
+
+
+assign sum[7:0] = int_sum;
+assign sum[8] = int_co[7];
+endmodule
+
+module fa (input a , input b , input c, output co , output sum);
+assign {co,sum} =a+b+c;
+endmodule
+```
+
+## Simulation
+![Screenshot from 2023-08-15 22-09-14](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/aa509b57-cb55-41b3-94d9-23f1a4b53036)
+
+
+## Synthesis
+
+
+
 </details>
+
 ## References
 1. https://yosyshq.net/yosys/
 2. https://linux.die.net/man/1/iverilog

@@ -596,6 +596,251 @@ This is the synthyesized circuit for a flattened netlist. Here u1 and u2 are fla
 
 </details>
 
+
+
+## Why flops?
+
+<details>
+<summary><strong>Flipflop simulation and synthesis</strong></summary>
+
+code of asynchronous reset flipflip
+```
+module dff_asyncres_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+Plot
+
+![Screenshot from 2023-08-15 10-48-40](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/eb2154ac-51bc-4743-abb0-a4c4bb2d4f58)
+
+
+//explain
+
+synthesis
+
+commands:
+```
+$yosys
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_asyncres.v
+yosys> synth -top dff_asyncres
+yosys> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+Design obtained with active high reset
+
+![Screenshot from 2023-08-15 11-08-40](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/754f9c96-60ca-41eb-a94f-47b08622417c)
+
+
+code for aynchronous set d flipflop
+
+```
+module dff_async_set ( input clk ,  input async_set , input d , output reg q );
+always @ (posedge clk , posedge async_set)
+begin
+	if(async_set)
+		q <= 1'b1;
+	else	
+		q <= d;
+end
+endmodule
+
+```
+plots
+
+![Screenshot from 2023-08-15 10-52-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7e89ef11-e8c1-44f8-92b2-62d7113e1bf0)
+
+
+
+ //explain
+
+ synthesis
+ commands
+ ```
+$yosys
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_async_set.v 
+yosys> synth -top dff_async_set
+yosys> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+design obtained
+
+![Screenshot from 2023-08-15 11-12-22](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8e3d6e87-0d20-489b-8b36-2e491667ea3f)
+
+
+ code for synchronous reset
+```
+module dff_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk )
+begin
+	if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+plot
+
+ ![Screenshot from 2023-08-15 10-58-17](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/683a4cab-630d-4def-853a-63175fb6ed64)
+//explain
+
+snthesis
+commands
+```
+
+$yosys
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_syncres.v 
+yosys> synth -top dff_syncres
+yosys> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+
+design
+![Screenshot from 2023-08-15 11-22-05](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/63033669-59ea-4673-80d3-d8861c2d9aba)
+
+
+code for dff with both synchronous and asynchronous reset
+```
+module dff_asyncres_syncres.v ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+
+```
+
+plots
+
+![Screenshot from 2023-08-15 11-31-42](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8089ae2a-10b3-4b9f-b4c4-d53181373aac)
+
+//explain
+
+synthesis
+commands
+```
+
+$yosys
+yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_asyncres_syncres.v
+yosys> synth -top dff_asyncres_syncres
+yosys> dfflibmap -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+
+```
+design
+![Screenshot from 2023-08-15 11-30-15](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/62ff37ff-89aa-4d17-b44d-4de34f44bf6f)
+
+
+Optimisation
+
+synthesis of module2
+code
+```
+module mul2 (input [2:0] a, output [3:0] y);
+	assign y = a * 2;
+endmodule
+```
+
+code of generated netlist
+```
+module mul2(a, y);
+  input [2:0] a;
+  wire [2:0] a;
+  output [3:0] y;
+  wire [3:0] y;
+  assign y = { a, 1'h0 };
+endmodule
+```
+generated netlist
+
+![Screenshot from 2023-08-15 12-02-19](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/20284045-da51-471e-8f25-034c8f0b2432)
+
+synthesis of module8
+ code 
+ ```
+module mult8(a, y);
+  input [2:0] a;
+  wire [2:0] a;
+  output [5:0] y;
+  wire [5:0] y;
+  assign y = { a, a };
+endmodule
+
+```
+generated netlist
+
+
+![Screenshot from 2023-08-15 12-08-36](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a699daf3-2a2b-468b-9e6d-e45118501a1c)
+
+
+</details>
+
+
+
+## Day 3
+
+## Optimisation
+<details>
+	<summary><strong>Optimisation logic techniques</strong></summary><br>
+	Logic optimization is a process of finding an equivalent representation of the specified logic circuit under one or more specified constraints. This process is a part of a logic synthesis          applied in digital electronics and integrated circuit design. 
+	There are two types of optimisation logic
+	<details><summary><strong>1. Combinational logic optimisation</strong></summary><br>
+ 	In this the logic gates get squeezed  to get the most optimized design that results in area and power saving.
+  It is done by two means:
+  1. constant propagation logic optimisation
+  Constant Propagation is an optimization technique employed by synthesis tools to minimize hardware implementation. This is achieved by optimizing away the logic for which parameters are configured to keep it disabled.
+
+let's understand it by an example:
+
+In this example we fixed one of our input A to 0 then progate it to the output. So we can simply replace the whole big circuit with just and inverter as both are having same output.
+
+![IMG_20230815_131136](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f21a189f-ccb8-4959-99a9-406fd5a07898)
+
+2.Boolean logic optimisation
+The optimization methods that consider logic functions as well as their representations are called "Boolean methods"
+Boolean function minimizing methods include: 
+ a. Karnaugh maps
+ b. Quine–McCluskey algorithm
+
+ let's understand it by an example:
+ In this optimisation we basically try to reduce the boolean expression using required methods.Hence we get the reduced logic expression 
+ 
+![IMG_20230815_131122](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7298588e-8a12-4a10-838b-2085b225d765)
+
+	
+ </details>
+<details>
+<summary><strong>Sequential logic optimisation</strong></summary>
+
+ 
+</details>
+
+ 
+</details>
+
+
 ## References
 1. https://yosyshq.net/yosys/
 2. https://linux.die.net/man/1/iverilog

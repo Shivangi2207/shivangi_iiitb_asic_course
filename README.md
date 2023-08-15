@@ -9,6 +9,15 @@
 
 [Day 1](#day-1)
 
+[Day 2](#day-2)
+
+[Day 3](#day-3)
+
+[Day 4](#day-4)
+
+[Day 5](#day-5)
+
+
 
 [References](#references)
 
@@ -1596,6 +1605,11 @@ endmodule
 
 ## Synthesis
 
+![Screenshot from 2023-08-15 22-12-37](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/e4239a9b-2ebe-40c2-a05b-644d63e10ec8)
+
+## Netlist Simulation
+
+![Screenshot from 2023-08-15 22-14-51](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/43cb35df-70cb-4ebe-b5d1-1b92f90f0e90)
 
 
 
@@ -1629,9 +1643,12 @@ endmodule
 
 
 ## Synthesis
+![Screenshot from 2023-08-15 22-16-53](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/f246a734-2bcc-4bd1-89a6-30ef1280b90e)
+![Screenshot from 2023-08-15 22-17-17](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/d1309118-1a35-4ec1-b1a2-66b21c8fbfb7)
 
 
-
+## Netlist Simulation
+![Screenshot from 2023-08-15 22-18-47](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/0913a91c-6b3b-4304-ada2-0a5a73bdc80b)
 
 
 ## Example 3:
@@ -1658,7 +1675,11 @@ endmodule
 
 ## Synthesis
 
+![Screenshot from 2023-08-15 22-20-19](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/bb8537bf-6922-4902-ad7a-e1353cea9444)
 
+## Netlist Simulation
+
+![Screenshot from 2023-08-15 22-25-43](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/ce75e237-0b26-42a0-9ce4-e51abeb439a9)
 
 
 ## Example 4:
@@ -1692,8 +1713,11 @@ endmodule
 
 
 ## Synthesis
+![Screenshot from 2023-08-15 22-22-18](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/ea006865-13ba-4d18-af0e-0f43c457fd1f)
 
 
+## Netlist Simulation
+![Screenshot from 2023-08-15 22-23-33](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/a0074f40-133c-4610-8acd-3696e5b8df09)
 
 </details>
 

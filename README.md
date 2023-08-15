@@ -860,6 +860,7 @@ module opt_check (input a , input b , output y);
 	assign y = a?b:0;
 endmodule
 ```
+![IMG_20230815_224754](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/3e4c1f41-632e-49d1-97ff-f1728bd3671c)
 
 ## Commands to run
 ```
@@ -869,6 +870,8 @@ yosys> synth -top opt_check
 yosys> abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
 yosys> show
 ```
+
+
 ## Obtained schematic
  
  ![Screenshot from 2023-08-15 15-58-12](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/b7a9d8b3-77e6-4d9b-ac4f-4e1fc317b8af)
@@ -881,6 +884,8 @@ module opt_check2 (input a , input b , output y);
 	assign y = a?1:b;
 endmodule
 ```
+![IMG_20230815_224811](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/57bd385b-0e70-4b21-ab70-1611dafa02f0)
+
 
 ## Commands:
 ```
@@ -901,6 +906,10 @@ module opt_check3 (input a , input b, input c , output y);
 	assign y = a?(c?b:0):0;
 endmodule
 ```
+![IMG_20230815_224822](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/1f8e3279-daa8-4cc8-8579-82e754c1926c)
+
+
+
 ## Commands:
 ```
 yosys> read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
@@ -1058,6 +1067,10 @@ module dff_const1(input clk, input reset, output reg q);
 	end
 endmodule
 ```
+
+
+![IMG_20230815_224833](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/68d32383-a6d6-4bdd-ad5c-e0bc7a79c8da)
+
 ## Simulation
 ![Screenshot from 2023-08-15 16-46-23](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/7c9a0178-a773-4a6e-81e6-f3a7a9b506b9)
 
@@ -1082,6 +1095,9 @@ module dff_const2(input clk, input reset, output reg q);
 	end
 endmodule
 ```
+![IMG_20230815_224842](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/8cb95b6e-5065-484a-affa-bce30014982a)
+
+
 ## Simulation
 
 ![Screenshot from 2023-08-15 16-53-35](https://github.com/Shivangi2207/shivangi_iiitb_asic_course/assets/140998647/1b8dd043-b983-4b1c-9aa5-a9404a475430)
